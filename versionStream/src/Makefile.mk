@@ -215,14 +215,6 @@ copy-resources: pre-build
 	@cp -r ./build/base/* $(OUTPUT_DIR)
 	@rm -rf $(OUTPUT_DIR)/kustomization.yaml
 
-.PHONY: verify-ingress
-verify-ingress:
-	jx verify ingress --ingress-service ingress-nginx-controller
-
-.PHONY: verify-ingress-ignore
-verify-ingress-ignore:
-	-jx verify ingress --ingress-service ingress-nginx-controller
-
 .PHONY: verify-install
 verify-install:
 # TODO lets disable errors for now
