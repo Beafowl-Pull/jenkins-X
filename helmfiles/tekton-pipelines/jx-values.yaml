@@ -18,7 +18,7 @@ jx:
       username: jenkins-x-labs-bot
 jxRequirements:
   autoUpdate:
-    enabled: false
+    enabled: true
     schedule: ""
   cluster:
     chartRepository: http://bucketrepo.jx.svc.cluster.local/bucketrepo/charts
@@ -33,16 +33,20 @@ jxRequirements:
     registry: ghcr.io
   environments:
   - key: dev
+    owner: Beafowl-Pull
+    repository: jenkins-X
   - key: staging
   - key: production
   ingress:
-    domain: change.me
+    domain: jenkins.aureagames.com
     kind: ingress
     namespaceSubDomain: -tekton-pipelines.
     tls:
       email: ""
       enabled: false
       production: false
+  pipelineUser:
+    username: beafowl-pull
   repository: bucketrepo
   secretStorage: local
   vault: {}
