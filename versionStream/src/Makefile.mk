@@ -150,7 +150,7 @@ fetch: init $(COPY_SOURCE) $(REPOSITORY_RESOLVE)
 	jx gitops image -s .jx/git-operator
 
 # generate the yaml from the charts in helmfile.yaml and moves them to the right directory tree (cluster or namespaces/foo)
-	helmfile $(HELMFILE_GLOBAL_FLAGS) --file helmfile.yaml template $(HELMFILE_TEMPLATE_FLAGS) --include-crds --output-dir-template /tmp/generate/{{.Release.Namespace}}/{{.Release.Name}}
+	helmfile $(HELMFILE_GLOBAL_FLAGS) --file helmfile.yaml template $(HELMFILE_TEMPLATE_FLAGS) --validate --include-crds --output-dir-template /tmp/generate/{{.Release.Namespace}}/{{.Release.Name}}
 
 	jx gitops split --dir /tmp/generate
 	jx gitops rename --dir /tmp/generate
@@ -214,6 +214,14 @@ kustomize: pre-build
 copy-resources: pre-build
 	@cp -r ./build/base/* $(OUTPUT_DIR)
 	@rm -rf $(OUTPUT_DIR)/kustomization.yaml
+
+.PHONY: verify-ingress
+verify-ingress:
+	jx verify ingress --ingress-service ingress-nginx-controller
+
+.PHONY: verify-ingress-ignore
+verify-ingress-ignore:
+	-jx verify ingress --ingress-service ingress-nginx-controller
 
 .PHONY: verify-install
 verify-install:
